@@ -1,0 +1,38 @@
+name: Unittest Py3
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.6"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements_dev.txt
+      - name: Test with pytest
+        run: |
+          export PYTHONPATH=$PYTHONPATH:"./bk-resource"
+          export PYTHONPATH=$PYTHONPATH:"./tests"
+          export DJANGO_SETTINGS_MODULE=tests.settings
+          export BK_APP_CONFIG_PATH=tests.config
+          pytest --cov=.
+      - name: Upload coverage to Codecov
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+        uses: codecov/codecov-action@v3
