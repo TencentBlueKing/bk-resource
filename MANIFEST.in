@@ -1,0 +1,3 @@
+recursive-include bk_resource/locale *.mo
+recursive-include bk_resource/locale *.po
+recursive-include bk_resource/conf/app_template *.py-tpl

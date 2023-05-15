@@ -10,7 +10,8 @@
 
 ## Overview
 
-`bk_resource` 是基于 [Blueapps](https://github.com/TencentBlueKing/blueapps) & [Django Rest Framework](https://github.com/encode/django-rest-framework) ，快速生成符合 [`12-factor`](https://12factor.net/) 规范的 `WEB SaaS` 的脚本架
+`bk_resource` 是一个基于 [Blueapps](https://github.com/TencentBlueKing/blueapps) 和 [Django Rest Framework](https://github.com/encode/django-rest-framework) 的脚手架，
+旨在帮助开发人员快速生成符合 [`12-factor`](https://12factor.net/) 规范的 WEB SaaS，并在`DDD`开发实践中方便地创建可扩展的领域服务
 
 ## Features
 
