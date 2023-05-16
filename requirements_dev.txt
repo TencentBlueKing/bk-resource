@@ -15,4 +15,3 @@ faker==14.2.1
 xmlrunner==1.7.7
 pyparsing==2.2.0
 PyYAML==6.0
-faker==14.2.1
