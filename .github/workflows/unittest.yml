@@ -31,7 +31,7 @@ jobs:
           export PYTHONPATH=$PYTHONPATH:"./tests"
           export DJANGO_SETTINGS_MODULE=tests.settings
           export BK_APP_CONFIG_PATH=tests.config
-          pytest --cov=.
+          pytest -vs tests --disable-warnings --cov=.
       - name: Upload coverage to Codecov
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}

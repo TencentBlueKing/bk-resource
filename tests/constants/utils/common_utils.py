@@ -20,6 +20,7 @@ BK_RESOURCE = "bk_resource"
 BK_RESOURCE_PACKAGES = [
     "apps",
     "base",
+    "conf",
     "contrib",
     "exceptions",
     "management",

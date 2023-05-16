@@ -66,7 +66,7 @@ class TestBkApiResource(TestCase):
             "REQUEST_BKAPI_COOKIE_FIELDS": ["username"],
         }
     )
-    @mock.patch("bk_resource.contrib.bk_api.get_local_request", MockRequest)
+    @mock.patch("blueapps.utils.request_provider.get_local_request", MockRequest)
     @mock.patch("bk_resource.contrib.api.requests.session", MockSession)
     def test_custom_cookie_fields(self):
         resp = MockApiResource().request()
