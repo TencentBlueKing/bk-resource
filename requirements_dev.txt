@@ -10,6 +10,8 @@ pytest-cov==3.0.0
 pytest-django==4.4.0
 pytest-xdist==2.4.0
 pytest-html==3.1.1
+pytest-mock==3.6.1
+faker==14.2.1
 xmlrunner==1.7.7
 pyparsing==2.2.0
 PyYAML==6.0

@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+
+# 代码规范
+pre-commit==2.9.2
+flake8==3.7.8
+seed-isort-config==1.9.2
+
+# 测试
+coverage==6.2
+pytest==6.2.5
+pytest-cov==3.0.0
+pytest-django==4.4.0
+pytest-xdist==2.4.0
+pytest-html==3.1.1
+xmlrunner==1.7.7
+pyparsing==2.2.0
+PyYAML==6.0

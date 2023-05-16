@@ -31,3 +31,4 @@ dist
 *.sqlite3
 .codecc
 build.yml
+.vscode

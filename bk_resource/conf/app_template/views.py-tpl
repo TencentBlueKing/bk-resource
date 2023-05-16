@@ -1,0 +1,7 @@
+# -*- coding: utf-8 -*-
+
+from bk_resource.viewsets import ResourceViewSet, ResourceRoute
+
+
+class {{ camel_case_app_name }}ViewSet(ResourceViewSet):
+    resource_routes = []

@@ -8,7 +8,7 @@
 
 ## Overview
 
-`bk_resource`, based on [Blueapps](https://github.com/TencentBlueKing/blueapps) and [Django Rest Framework](https://github.com/encode/django-rest-framework), is a framework for quickly generating `Web SaaS` that compiles with the [`twelve-factor`](https://12factor.net/) methodology
+`bk_resource`, is a scaffold based on [Blueapps](https://github.com/TencentBlueKing/blueapps) and [Django Rest Framework](https://github.com/encode/django-rest-framework), supports to quickly generate WEB SaaS projects that comply with the [`twelve-factor`](https://12factor.net/) specification and DDD (Domain-Driven Design) development mode.
 
 ## Features
 
@@ -16,7 +16,7 @@
 - [Basic] Based on `django-environ`, adapt both environment variables and `.env` file
 - [Basic] Support for `PEP-621` with config plan of mypy, isort, flake8, black
 - [Basic] Support for code standardization tools: `pre-commit`、`code-cc`
-- [Resource] Integrate `bk_resource` to organize project directory structure, declare business logic through `Resource`
+- [Resource] Integrate `bk_resource` to organize project directory structure, declare business logic through `Resource`, compatible with DDD development mode.
 - [Resource] Support to use `ApiResource` / `BkApiResource` fo third-party `API`
 
 ## Getting started
