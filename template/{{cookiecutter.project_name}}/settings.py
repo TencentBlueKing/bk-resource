@@ -29,21 +29,33 @@ else:
     }.get(PAAS_V2_ENVIRONMENT)
 DJANGO_CONF_MODULE = "config.{env}".format(env=ENVIRONMENT)
 
-# 获取所有的模块
+# 预配置常量
+DEPLOY_ALL_MODULE = "__all__"
+DEPLOY_MODULE_ENV_KEY = "BKAPP_DEPLOY_MODULE"
 MODULE_PATH = "modules"
+DEFAULT_DEPLOY_MODULE = "default"
+# 获取所有的模块
 ALL_MODULES = [
     _path
     for _path in os.listdir(MODULE_PATH)
     if not _path.startswith("_") and os.path.isdir(os.path.join(MODULE_PATH, _path))
 ]
 # 默认运行所有模块，根据环境变量运行
-DEPLOY_MODULE = [
-    _module for _module in os.getenv("BKAPP_DEPLOY_MODULE", "").split(",") if _module in ALL_MODULES
-] or ALL_MODULES
+if os.getenv(DEPLOY_MODULE_ENV_KEY) == DEPLOY_ALL_MODULE:
+    DEPLOY_MODULE = ALL_MODULES
+else:
+    DEPLOY_MODULE = [
+        _module
+        for _module in os.getenv(DEPLOY_MODULE_ENV_KEY, DEFAULT_DEPLOY_MODULE).split(",")
+        if _module in ALL_MODULES
+    ]
 # 添加运行 Path
 sys.path.append(os.path.join(os.getcwd(), MODULE_PATH))
 for _module in DEPLOY_MODULE:
     sys.path.append(os.path.join(os.getcwd(), f"{MODULE_PATH}/{_module}"))
+
+# 需要进行合并的配置项列表
+SETTINGS_FOR_MERGE = ["INSTALLED_APPS"]
 
 
 def load_settings(module_path: str, raise_exception: bool = True):
@@ -57,7 +69,10 @@ def load_settings(module_path: str, raise_exception: bool = True):
         return
     for setting in dir(module):
         if setting == setting.upper():
-            globals()[setting] = getattr(module, setting)
+            if setting in SETTINGS_FOR_MERGE and setting in globals():
+                globals()[setting] += getattr(module, setting)
+            else:
+                globals()[setting] = getattr(module, setting)
 
 
 load_settings(module_path=DJANGO_CONF_MODULE)
