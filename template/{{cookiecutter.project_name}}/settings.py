@@ -54,7 +54,7 @@ sys.path.append(os.path.join(os.getcwd(), MODULE_PATH))
 for _module in DEPLOY_MODULE:
     sys.path.append(os.path.join(os.getcwd(), f"{MODULE_PATH}/{_module}"))
 
-# 需要进行合并的配置项列表
+# settings for merge, each of them should be one of tuple, list, set
 SETTINGS_FOR_MERGE = ["INSTALLED_APPS"]
 
 
@@ -70,7 +70,15 @@ def load_settings(module_path: str, raise_exception: bool = True):
     for setting in dir(module):
         if setting == setting.upper():
             if setting in SETTINGS_FOR_MERGE and setting in globals():
-                globals()[setting] += getattr(module, setting)
+                # mix global setting and module setting
+                globals()[setting] = (
+                    *globals()[setting],
+                    *(
+                        _s
+                        for _s in getattr(module, setting)
+                        if _s not in globals()[setting]
+                    )
+                )
             else:
                 globals()[setting] = getattr(module, setting)
 
