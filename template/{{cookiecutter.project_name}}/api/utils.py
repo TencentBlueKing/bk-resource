@@ -11,7 +11,7 @@ def get_endpoint(api_name, provider=APIProvider.APIGW, stage=None):
     """
     # 默认环境
     if not stage:
-        stage = "prod" if settings.RUN_MODE == "prod" else "stag"
+        stage = "prod" if settings.RUN_MODE == "PRODUCT" else "stag"
 
     # api provider
     if provider == APIProvider.ESB:
