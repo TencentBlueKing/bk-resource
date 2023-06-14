@@ -271,6 +271,10 @@ class ResourceViewSet(viewsets.GenericViewSet):
 
             end_time = arrow.now().datetime
 
+            # 不记录日志的直接返回
+            if not resource.support_data_collect:
+                return response
+
             # 记录请求日志
             resource_name = "{}.{}".format(resource.__class__.__module__, resource.__class__.__name__)
             log_handler = bk_resource_settings.REQUEST_LOG_HANDLER
