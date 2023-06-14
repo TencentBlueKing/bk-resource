@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import uuid
+
 from blueapps.utils.request_provider import get_request_username
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy
 
 
 class OperateRecordQuerySet(models.query.QuerySet):
@@ -66,8 +68,11 @@ class OperateRecordModelManager(models.Manager):
         for obj in objs:
             obj.created_at = obj.created_at or timezone.now()
             obj.created_by = obj.created_by or get_request_username()
-            obj.updated_at = obj.updated_at or timezone.now()
-            obj.updated_by = obj.updated_by or get_request_username()
+            obj.updated_at = timezone.now()
+            obj.updated_by = get_request_username()
+        if "fields" in kwargs:
+            kwargs["fields"] = {field for field in kwargs["fields"]}
+            kwargs["fields"].update({"created_at", "created_by", "updated_at", "updated_by"})
         return super().bulk_update(objs, *args, **kwargs)
 
 
@@ -78,18 +83,12 @@ class OperateRecordModel(models.Model):
     """
 
     objects = OperateRecordModelManager()
-
     origin_objects = models.Manager()
 
-    created_at = models.DateTimeField(_("创建时间"), default=timezone.now)
-
-    created_by = models.CharField(_("创建者"), max_length=32, default="", null=True)
-    updated_at = models.DateTimeField(
-        _("更新时间"),
-        blank=True,
-        null=True,
-    )
-    updated_by = models.CharField(_("修改者"), max_length=32, blank=True, default="", null=True)
+    created_at = models.DateTimeField(gettext_lazy("创建时间"), default=timezone.now, auto_now_add=True)
+    created_by = models.CharField(gettext_lazy("创建者"), max_length=32, default="", null=True, blank=True)
+    updated_at = models.DateTimeField(gettext_lazy("更新时间"), blank=True, null=True, auto_now=True)
+    updated_by = models.CharField(gettext_lazy("修改者"), max_length=32, default="", blank=True, null=True)
 
     def save(self, *args, **kwargs):
         """
@@ -103,13 +102,15 @@ class OperateRecordModel(models.Model):
         operator = get_request_username()
         if not self.created_by:
             self.created_by = operator
+            if "update_fields" in kwargs:
+                kwargs["update_fields"] = {key for key in kwargs["update_fields"]}
+                kwargs["update_fields"].update({"created_by"})
 
-        if not self.updated_at:
-            self.updated_at = timezone.now()
-
-        # 更新数据时你需要手动传递更新人，否则不会更新
-        if not self.updated_by:
-            self.updated_by = operator
+        self.updated_at = timezone.now()
+        self.updated_by = operator
+        if "update_fields" in kwargs:
+            kwargs["update_fields"] = {key for key in kwargs["update_fields"]}
+            kwargs["update_fields"].update({"updated_at", "updated_by"})
 
         super().save(*args, **kwargs)
 
@@ -179,7 +180,7 @@ class SoftDeleteModel(OperateRecordModel):
 
     objects = SoftDeleteModelManager()
 
-    is_deleted = models.BooleanField(_("是否删除"), default=False)
+    is_deleted = models.BooleanField(gettext_lazy("是否删除"), default=False)
 
     def delete(self, *args, **kwargs):  # pylint: disable=unused-argument
         """
@@ -193,3 +194,13 @@ class SoftDeleteModel(OperateRecordModel):
         """元数据定义"""
 
         abstract = True
+
+
+class UUIDField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs.update({"default": UUIDField.get_default_value, "max_length": max(64, kwargs.get("max_length", 0))})
+        super().__init__(*args, **kwargs)
+
+    @classmethod
+    def get_default_value(cls) -> str:
+        return uuid.uuid1().hex
