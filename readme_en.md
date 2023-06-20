@@ -37,13 +37,13 @@ $ cookiecutter https://github.com/TencentBlueKing/bk-resource.git --checkout mai
 
 ![ddd](assests/framework.png)
 
-- Api Interaction Layer 
+- Api Interaction Layer    
     Expose services to users through UI Api or Open Api, and the corresponding Api is responsible for connecting the corresponding business logic.
-- Scene Layer
+- Scene Layer   
     When accessing the backend through Api, the actual access is a scene service exposed by Resource, which connects the business logic of the domain layer.
-- Domain Layer
+- Domain Layer   
     The domain layer focuses on the corresponding sub-modules, responsible for handling the specific business logic, such as, in the user module, processing user registration, login, password modification, password reset, etc.
-- Model Layer
+- Model Layer   
     In the MVC framework (such as Django), the code architecture is divided into Model, View, and Controller layers. The View is used for display. In the practice of front-end and back-end separation development and deployment, it is no longer processed by the backend, and the backend only needs to handle Model & Controller.
 
 ## Roadmap
