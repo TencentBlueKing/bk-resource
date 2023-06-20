@@ -49,7 +49,6 @@ $ cookiecutter https://github.com/TencentBlueKing/bk-resource.git --checkout mai
 - Model 模型层   
     在 MVC 框架中 (如 Django)，将代码架构划分为 Model (模型)，View (视图)，Controller (控制器) 三层，View 用于界面展示，在前后端分离开发部署的实践中，已经不再由后端处理，后端只需要处理 Model & Controller。
 
-
 ## Roadmap
 
 - [版本日志](release.md)
