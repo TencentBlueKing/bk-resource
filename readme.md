@@ -36,6 +36,19 @@ $ cookiecutter https://github.com/TencentBlueKing/bk-resource.git --checkout mai
 - [快速开始](template/readme.md)
 - [使用文档](docs/usage.md)
 
+### Domain Driven Design 开发实践
+
+![ddd](assests/framework.png)
+
+- Api 交互层   
+    通过 UI Api 或者 Open Api 将服务暴露给用户，由对应的 Api 负责对应的业务逻辑串联。
+- Scene 场景层   
+    在通过 Api 访问后端时，实际访问的是由 Resource 暴露的一个场景服务，通过场景服务串联领域层的业务逻辑。
+- Domain 领域层   
+    领域层聚焦对应的细分模块，负责处理模块的具体业务逻辑，例如，在用户模块中，处理用户注册、登录、修改密码、重置密码等逻辑。
+- Model 模型层   
+    在 MVC 框架中 (如 Django)，将代码架构划分为 Model (模型)，View (视图)，Controller (控制器) 三层，View 用于界面展示，在前后端分离开发部署的实践中，已经不再由后端处理，后端只需要处理 Model & Controller。
+
 ## Roadmap
 
 - [版本日志](release.md)
