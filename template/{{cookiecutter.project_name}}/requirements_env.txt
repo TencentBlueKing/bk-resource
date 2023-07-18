@@ -2,6 +2,6 @@
 
 # PaaS 增强服务需要的依赖包，请不要修改，否则可能导致增强服务不可用
 # for sentry
-raven==6.5.0
+sentry-sdk==1.28.1
 
 bkapi-component-open>=1.1.0
