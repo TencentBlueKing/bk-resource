@@ -20,7 +20,7 @@ from setuptools import setup
 
 setup(
     name="bk_resource",
-    version="0.4.0",
+    version="0.4.1",
     author="blueking",
     url="https://bk.tencent.com",
     author_email="blueking@tencent.com",
@@ -34,7 +34,7 @@ setup(
         "bk_resource.utils",
     ],
     install_requires=[
-        "blueapps>=4.7.0rc0,<4.8.0",
+        "blueapps==4.7.0rc1",
         "django>=3.2.18",
         "djangorestframework>=3.12.0",
         "drf-yasg>=1.20.0",
