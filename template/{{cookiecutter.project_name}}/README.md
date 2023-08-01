@@ -58,7 +58,7 @@ BKAPP_DEPLOY_MODULE=default
 创建本地数据库
 
 ```
-CREATE DATABASE IF NOT EXISTS `{{ cookiecutter.db_name }}` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `{{ cookiecutter.app_id }}` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 ```
 
 ### 5、声明目录

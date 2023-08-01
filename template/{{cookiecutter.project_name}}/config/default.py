@@ -148,6 +148,20 @@ if REDIS_HOST:
 else:
     CACHES["default"] = CACHES["db"]
 
+# PaaS V2 DB
+if os.getenv("BKAPP_MYSQL_NAME"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.getenv("BKAPP_MYSQL_NAME"),
+            "USER": os.getenv("BKAPP_MYSQL_USER"),
+            "PASSWORD": os.getenv("BKAPP_MYSQL_PASSWORD"),
+            "HOST": os.getenv("BKAPP_MYSQL_HOST"),
+            "PORT": os.getenv("BKAPP_MYSQL_PORT"),
+            "OPTIONS": {"isolation_level": "repeatable read"},
+        }
+    }
+
 """
 以下为框架代码 请勿修改
 """
