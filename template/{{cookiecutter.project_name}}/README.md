@@ -9,7 +9,7 @@
 
 #### 环境依赖
 
-Python 3.6、MySQL 5.7+、Redis 3.2+
+Python {{ cookiecutter.python_version }}、MySQL 5.7+、Redis 3.2+
 
 #### PIP源
 
@@ -58,7 +58,7 @@ BKAPP_DEPLOY_MODULE=default
 创建本地数据库
 
 ```
-CREATE DATABASE IF NOT EXISTS `{{ cookiecutter.db_name }}` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `{{ cookiecutter.app_id }}` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 ```
 
 ### 5、声明目录
@@ -151,6 +151,10 @@ INSTALLED_APPS 应在模块的配置中进行覆盖式声明
 2. 在目录下创建 app，可以使用 `python manage.py start_resource xxx` 来新建
 3. 新建 `settings.py` 文件，并声明 `INSTALLED_APPS`，可参考 web 模块的声明方式
 4. 更新环境变量 `BKAPP_DEPLOY_MODULE` 为对应的模块名后重启服务
+
+### 3.3 修改 PaaS 运行时 Python 版本
+
+参考：https://bk.tencent.com/docs/markdown/ZH/PaaS/DevelopTools/BaseGuide/topics/paas/choose_python_version.md
 
 ## 四、常见问题 
 
