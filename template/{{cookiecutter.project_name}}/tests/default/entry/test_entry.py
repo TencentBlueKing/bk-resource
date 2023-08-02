@@ -26,5 +26,5 @@ class EntryTest(TestCase):
         test as api url
         """
 
-        data = self.client.get("/").data
+        data = self.client.get("/default/").data
         self.assertEqual(data, ENTRY_DATA)
