@@ -1,7 +1,7 @@
 {
     "app_id": "bk_app_code",
     "project_name": "{{ cookiecutter.app_id }}",
-    "python_version": ["3.10.5", "3.6.8"],
+    "python_version": ["3.10.5", "3.6.12"],
     "_copy_without_render": [
         "static",
         "templates",
