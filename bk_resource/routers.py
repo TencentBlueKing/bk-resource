@@ -52,7 +52,7 @@ class ResourceRouter(DefaultRouter):
             if isinstance(viewset, type) and issubclass(viewset, GenericViewSet):
                 module_prefix = self.get_default_basename(viewset)
                 if prefix:
-                    module_prefix = f"{prefix}/{module_prefix}"
+                    module_prefix = f"{prefix}/{module_prefix}" if module_prefix else prefix
                 self.register(module_prefix, viewset)
 
     def get_default_basename(self, viewset):
