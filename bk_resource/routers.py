@@ -40,7 +40,7 @@ class ResourceRouter(DefaultRouter):
         self._init_resource_viewset(viewset)
         super(ResourceRouter, self).register(prefix, viewset, base_name)
 
-    def register_module(self, viewset_module):
+    def register_module(self, viewset_module, prefix=None):
         """
         注册整个ResourceViewset模块，并根据类的命名规则自动生成对应的url
         """
@@ -50,8 +50,10 @@ class ResourceRouter(DefaultRouter):
                 continue
 
             if isinstance(viewset, type) and issubclass(viewset, GenericViewSet):
-                prefix = self.get_default_basename(viewset)
-                self.register(prefix, viewset)
+                module_prefix = self.get_default_basename(viewset)
+                if prefix:
+                    module_prefix = f"{prefix}/{module_prefix}" if module_prefix else prefix
+                self.register(module_prefix, viewset)
 
     def get_default_basename(self, viewset):
         return get_underscore_viewset_name(viewset)
