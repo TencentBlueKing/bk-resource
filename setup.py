@@ -20,7 +20,7 @@ from setuptools import setup
 
 setup(
     name="bk_resource",
-    version="0.4.3",
+    version="0.4.4",
     author="blueking",
     url="https://bk.tencent.com",
     author_email="blueking@tencent.com",
