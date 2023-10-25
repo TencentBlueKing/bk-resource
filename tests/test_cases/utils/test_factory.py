@@ -15,9 +15,11 @@ specific language governing permissions and limitations under the License.
 We undertake not to change the open source license (MIT license) applicable
 to the current version of the project delivered to anyone in the future.
 """
+
 from enum import Enum
-from django.test import TestCase
+
 import pytest
+from django.test import TestCase
 
 from bk_resource.utils.factory import GenericFactory, SimpleFactory, SingletonFactory
 

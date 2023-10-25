@@ -1,5 +1,9 @@
 # 版本日志
 
+## 0.4.4
+
+- 修复 Header 类型声明异常
+
 ## 0.4.3
 
 - 支持 ResourceRouter URL 前辍

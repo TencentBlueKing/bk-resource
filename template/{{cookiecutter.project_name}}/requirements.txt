@@ -6,7 +6,7 @@
 # 各自环境所需的不同依赖, 通过 sites/${env}/deploy/requirements_env.txt得到
 -r requirements_env.txt
 
-bk_resource==0.4.2
+bk_resource==0.4.4
 
 # web server
 gunicorn==19.6.0

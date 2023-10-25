@@ -17,6 +17,7 @@ to the current version of the project delivered to anyone in the future.
 """
 
 import abc
+from typing import Dict
 
 import requests
 from django.utils.encoding import force_str
@@ -72,7 +73,7 @@ class ApiResourceProtocol(metaclass=abc.ABCMeta):
     def build_request_data(self, validated_request_data: dict) -> dict:
         raise NotImplementedError
 
-    def build_header(self, validated_request_data: dict) -> str:
+    def build_header(self, validated_request_data: dict) -> Dict[str, str]:
         raise NotImplementedError
 
     def before_request(self, context: dict) -> dict:
@@ -97,7 +98,6 @@ class APIResource(ApiResourceProtocol, CacheResource, metaclass=abc.ABCMeta):
         assert self.method.upper() in ["GET", "POST", "PUT", "PATCH", "DELETE"], gettext(
             "%s method 仅支持GET或POST或PUT或PATCH或DELETE，当前为%s"
         ) % (self.module_name, self.method.upper())
-
         self.method = self.method.upper()
         self.session = requests.session()
 
