@@ -29,7 +29,7 @@ from rest_framework.response import Response
 from bk_resource.exceptions import ValidateException
 from bk_resource.settings import bk_resource_settings
 from bk_resource.tasks import run_perform_request
-from bk_resource.tools import format_serializer_errors
+from bk_resource.tools import format_serializer_errors, get_processes
 from bk_resource.utils.logger import logger
 from bk_resource.utils.request import get_request_username
 from bk_resource.utils.thread_backend import ThreadPool
@@ -295,7 +295,7 @@ class Resource(metaclass=abc.ABCMeta):
         if not isinstance(request_data_iterable, (list, tuple)):
             raise TypeError("'request_data_iterable' object is not iterable")
 
-        pool = ThreadPool()
+        pool = ThreadPool(processes=get_processes())
         futures = []
 
         from blueapps.utils.request_provider import get_local_request

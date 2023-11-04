@@ -1,7 +1,7 @@
 ![logo.png](assests/logo.png)
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/TencentBlueKing/bk-resource/blob/main/LICENSE.txt)
-[![Release Version](https://img.shields.io/badge/release-0.4.4-brightgreen.svg)](https://github.com/TencentBlueKing/bk-resource/releases)
+[![Release Version](https://img.shields.io/badge/release-0.4.5-brightgreen.svg)](https://github.com/TencentBlueKing/bk-resource/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/TencentBlueKing/bk-resource/pulls)
 [![codecov](https://codecov.io/gh/TencentBlueKing/bk-resource/branch/main/graph/badge.svg)](https://codecov.io/gh/TencentBlueKing/bk-resource)
 [![Unittest Py3](https://github.com/TencentBlueKing/bk-resource/actions/workflows/unittest.yml/badge.svg)](https://github.com/TencentBlueKing/bk-resource/actions/workflows/unittest.yml)
