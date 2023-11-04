@@ -224,10 +224,12 @@ def get_processes() -> int:
     with ignored(Exception):
         with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us", "r") as f:
             cfs_quota_us = float(f.read().strip())
+        with open("/sys/fs/cgroup/cpu/cpu.cfs_period_us", "r") as f:
+            cfs_period_us = float(f.read().strip())
         # 当 cfs_quota_us = -1 时表示无限制
         if cfs_quota_us > 0:
             # 向上取整，至少保证有 1 个
-            container_cpu = math.ceil(cfs_quota_us / 100 / 1000)
+            container_cpu = math.ceil(cfs_quota_us / cfs_period_us)
 
     # 取限制中的较小值
     return min(container_cpu, cpu_count)
