@@ -221,7 +221,7 @@ def get_processes() -> int:
     # 容器限制
     # 先给默认值避免后续比较报错
     container_cpu = cpu_count
-    with ignored(Exception):
+    with ignored(Exception, log_exception=False):
         with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us", "r") as f:
             cfs_quota_us = float(f.read().strip())
         with open("/sys/fs/cgroup/cpu/cpu.cfs_period_us", "r") as f:

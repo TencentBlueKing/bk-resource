@@ -292,22 +292,26 @@ class Resource(metaclass=abc.ABCMeta):
         """
         基于多线程的批量并发请求
         """
+
+        # 预检查
         if not isinstance(request_data_iterable, (list, tuple)):
             raise TypeError("'request_data_iterable' object is not iterable")
 
-        pool = ThreadPool(processes=get_processes())
-        futures = []
-
+        # 模块引入，放在文件头可能导致 django 未完全初始化异常
         from blueapps.utils.request_provider import get_local_request
 
+        # 初始化
+        futures = []
         _request = get_local_request()
 
-        for request_data in request_data_iterable:
-            futures.append(pool.apply_async(self.request, args=(request_data,), kwds={"_request": _request}))
+        # 线程池
+        with ThreadPool(processes=get_processes()) as pool:
+            for request_data in request_data_iterable:
+                futures.append(pool.apply_async(self.request, args=(request_data,), kwds={"_request": _request}))
+            pool.close()
+            pool.join()
 
-        pool.close()
-        pool.join()
-
+        # 获取结果
         results = []
         exceptions = []
         for future in futures:
