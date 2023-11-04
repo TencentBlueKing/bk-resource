@@ -17,6 +17,8 @@ to the current version of the project delivered to anyone in the future.
 """
 
 import json
+import math
+import os
 from collections import OrderedDict
 
 from django.utils.encoding import force_str
@@ -24,6 +26,8 @@ from django.utils.translation import gettext
 from rest_framework import serializers
 from rest_framework.fields import empty
 
+from bk_resource.settings import bk_resource_settings
+from bk_resource.utils.common_utils import ignored
 from bk_resource.utils.logger import logger
 from bk_resource.utils.text import camel_to_underscore
 
@@ -199,3 +203,31 @@ def format_serializer_errors(serializer):
         return serializer.errors
     else:
         return message
+
+
+def get_processes() -> int:
+    """
+    获取CPU数量或者容器内限制数量
+    """
+
+    # 环境变量
+    processes = bk_resource_settings.RESOURCE_BULK_REQUEST_PROCESSES
+    if processes and isinstance(processes, int):
+        return processes
+
+    # CPU
+    cpu_count = os.cpu_count()
+
+    # 容器限制
+    # 先给默认值避免后续比较报错
+    container_cpu = cpu_count
+    with ignored(Exception):
+        with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us", "r") as f:
+            cfs_quota_us = float(f.read().strip())
+        # 当 cfs_quota_us = -1 时表示无限制
+        if cfs_quota_us > 0:
+            # 向上取整，至少保证有 1 个
+            container_cpu = math.ceil(cfs_quota_us / 100 / 1000)
+
+    # 取限制中的较小值
+    return min(container_cpu, cpu_count)

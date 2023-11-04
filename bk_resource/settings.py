@@ -48,6 +48,7 @@ class BkResourceSettings:
         PLATFORM_AUTH_ACCESS_TOKEN=None,
         PLATFORM_AUTH_ACCESS_USERNAME=None,
         REQUEST_BKAPI_COOKIE_FIELDS=["blueking_language", "django_language"],
+        RESOURCE_BULK_REQUEST_PROCESSES=None,
     )
 
     LAZY_IMPORT_SETTINGS = (
