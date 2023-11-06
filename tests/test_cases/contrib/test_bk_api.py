@@ -18,6 +18,7 @@ to the current version of the project delivered to anyone in the future.
 
 from unittest import mock
 
+from django.conf import settings
 from django.test import TestCase, override_settings
 
 from bk_resource.exceptions import PlatformAuthParamsNotExist
@@ -70,4 +71,14 @@ class TestBkApiResource(TestCase):
     @mock.patch("bk_resource.contrib.api.requests.session", MockSession)
     def test_custom_cookie_fields(self):
         resp = MockApiResource().request()
-        self.assertEqual(resp, {"headers": {"cookie": "username=admin"}})
+        self.assertEqual(
+            resp,
+            {
+                "headers": {
+                    "cookie": "username=admin",
+                    "x-bkapi-authorization": (
+                        f'{{"bk_app_code": "{settings.APP_CODE}", "bk_app_secret": "{settings.SECRET_KEY}"}}'
+                    ),
+                }
+            },
+        )
