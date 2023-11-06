@@ -116,15 +116,17 @@ class APIResource(ApiResourceProtocol, CacheResource, metaclass=abc.ABCMeta):
         request_url = self.build_url(validated_request_data)
         logger.debug("request: {}".format(request_url))
 
+        # 构造请求头
+        headers = self.build_header(validated_request_data)
+        kwargs = {
+            "method": self.method,
+            "url": request_url,
+            "timeout": self.TIMEOUT,
+            "headers": headers,
+            "verify": bk_resource_settings.REQUEST_VERIFY,
+        }
+
         try:
-            headers = self.build_header(validated_request_data)
-            kwargs = {
-                "method": self.method,
-                "url": request_url,
-                "timeout": self.TIMEOUT,
-                "headers": headers,
-                "verify": bk_resource_settings.REQUEST_VERIFY,
-            }
             if self.method == "GET":
                 kwargs["params"] = validated_request_data
                 kwargs = self.before_request(kwargs)
@@ -151,7 +153,7 @@ class APIResource(ApiResourceProtocol, CacheResource, metaclass=abc.ABCMeta):
                 module_name=self.module_name,
                 url=self.action,
                 result=err_message,
-            )
+            ) from err
         return self.parse_response(response)
 
     def build_url(self, validated_request_data):
