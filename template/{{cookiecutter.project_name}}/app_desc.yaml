@@ -5,3 +5,7 @@ modules:
     processes:
       web:
         command: gunicorn wsgi -w 4 -b :$PORT --access-logfile - --error-logfile - --access-logformat '[%(h)s] %({request_id}i)s %(u)s %(t)s "%(r)s" %(s)s %(D)s %(b)s "%(f)s" "%(a)s"'
+        plan: 4C1G5R
+        replicas: 2
+    scripts:
+      pre_release_hook: sh -c "python manage.py migrate --no-input && python manage.py createcachetable"
