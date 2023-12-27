@@ -26,9 +26,36 @@
 
 ### Installation
 
+1. 安装`cruft`
 ```bash
-$ pip install cookiecutter
-$ cookiecutter https://github.com/TencentBlueKing/bk-resource.git --checkout main --directory template
+$ pip install cruft
+```
+
+2. 通过`cruft`脚本架生成项目
+```bash
+$ cruft create https://github.com/TencentBlueKing/bk-resource.git --checkout main --directory template
+```
+
+3. 添加远程仓库地址并完成推送
+```bash
+cd {{ project_id }}
+git init
+git add .
+git commit -m "init repo"
+git remote add origin {{ git_url }}
+git push -u origin master
+```
+
+### 模板生命周期管理
+检查或更新模板前需确保本地代码已提交到 GIT 仓库
+1. 检查模板是否更新
+```bash
+$ cruft check
+```
+
+2. 合并模板到本地项目
+```bash
+$ cruft update
 ```
 
 ### Usage
