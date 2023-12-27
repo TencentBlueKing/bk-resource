@@ -26,14 +26,9 @@
 
 ### Installation
 
-1. 确认环境依赖
+1. 安装`cruft`
 ```bash
-$ python --version
-Python 3.6.15
-
-$ pip install cruft==2.10.2
-$ cruft --help
-Version: 2.10.2
+$ pip install cruft
 ```
 
 2. 通过`cruft`脚本架生成项目
@@ -53,16 +48,15 @@ git push -u origin master
 
 ### 模板生命周期管理
 检查或更新模板前需确保本地代码已提交到 GIT 仓库
-1. 检查模板状态
+1. 检查模板是否更新
 ```bash
-$ cruft check -c main
+$ cruft check
 ```
 
-2. 更新模板
+2. 合并模板到本地项目
 ```bash
-$ cruft update -c main
+$ cruft update
 ```
-
 
 ### Usage
 
