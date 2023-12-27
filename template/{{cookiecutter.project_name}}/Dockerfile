@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:{{ cookiecutter.python_version }}
 RUN mkdir -p /app
 COPY . /app
 WORKDIR /app

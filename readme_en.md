@@ -23,9 +23,36 @@
 
 ### Installation
 
+1. Install `cruft`
 ```bash
-$ pip install cookiecutter
-$ cookiecutter https://github.com/TencentBlueKing/bk-resource.git --checkout main --directory template
+$ pip install cruft
+```
+
+2. Generate project using `cruft`
+```bash
+$ cruft create https://github.com/TencentBlueKing/bk-resource.git --checkout main --directory template
+```
+
+3. Add a remote repository and push
+```bash
+cd {{ project_id }}
+git init
+git add .
+git commit -m "init repo"
+git remote add origin {{ git_url }}
+git push -u origin master
+```
+
+### Template Lifecycle Management
+Make sure the local code has been committed before checking or updating the template,
+1. Check update of the template
+```bash
+$ cruft check
+```
+
+2. Merge the template into the local project
+```bash
+$ cruft update
 ```
 
 ### Usage
