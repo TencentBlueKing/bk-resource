@@ -130,7 +130,7 @@ class BkApiResource(APIResource, abc.ABC):
         from blueapps.utils.request_provider import get_local_request
 
         # 初始化
-        headers = {}
+        headers = {bk_resource_settings.REQUEST_LANGUGAE_HEADER_KEY: settings.LANGUAGE_CODE}
 
         # 透传 Cookie
         request = get_local_request()
@@ -141,6 +141,10 @@ class BkApiResource(APIResource, abc.ABC):
                     for key, val in request.COOKIES.items()
                     if key in bk_resource_settings.REQUEST_BKAPI_COOKIE_FIELDS
                 ]
+            )
+            # 根据用户的Cookie指定语言
+            headers[bk_resource_settings.REQUEST_LANGUGAE_HEADER_KEY] = request.COOKIES.get(
+                settings.LANGUAGE_COOKIE_NAME, settings.LANGUAGE_CODE
             )
 
         # 鉴权参数

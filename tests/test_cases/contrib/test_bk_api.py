@@ -75,6 +75,7 @@ class TestBkApiResource(TestCase):
             resp,
             {
                 "headers": {
+                    "blueking-language": "zh-Hans",
                     "cookie": "username=admin",
                     "x-bkapi-authorization": (
                         f'{{"bk_app_code": "{settings.APP_CODE}", "bk_app_secret": "{settings.SECRET_KEY}"}}'
