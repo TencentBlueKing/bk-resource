@@ -23,11 +23,63 @@ from typing import Dict
 import requests
 from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
+from django.db.models import TextChoices
+from django.utils.translation import gettext_lazy
 
 from bk_resource.contrib.api import APIResource
 from bk_resource.exceptions import IAMNoPermission, PlatformAuthParamsNotExist
 from bk_resource.settings import bk_resource_settings
+from bk_resource.utils.cache import CacheTypeItem
 from bk_resource.utils.common_utils import is_backend
+
+
+class GetAppAccessToken(APIResource):
+    name = gettext_lazy("获取应用AccessToken")
+    base_url = bk_resource_settings.ACCESS_TOKEN_API_URL
+    method = "POST"
+    action = ""
+    cache_type = CacheTypeItem(
+        key="app_access_token", timeout=bk_resource_settings.ACCESS_TOKEN_TIMEOUT, user_related=False
+    )
+    support_data_collect = False
+
+    class GrantType(TextChoices):
+        AUTH = "authorization_code", gettext_lazy("登录态授权")
+        CLIENT = "client_credentials", gettext_lazy("客户端授权")
+
+    class IDProvider(TextChoices):
+        CLIENT = "client", gettext_lazy("客户端")
+
+    def build_url(self, validated_request_data):
+        return self.base_url
+
+    def build_header(self, validated_request_data: dict) -> Dict[str, str]:
+        header = super().build_header(validated_request_data)
+        header.update(
+            {
+                "X-Bk-App-Code": settings.APP_CODE,
+                "X-Bk-App-Secret": settings.SECRET_KEY,
+            }
+        )
+        return header
+
+    def build_request_data(self, validated_request_data: dict) -> dict:
+        data = super().build_request_data(validated_request_data)
+        data.update(
+            {
+                "app_code": settings.APP_CODE,
+                "app_secret": settings.SECRET_KEY,
+                "env_name": "prod" if settings.RUN_MODE == "PRODUCT" else "test",
+                "grant_type": self.GrantType.CLIENT,
+                "id_provider": self.IDProvider.CLIENT,
+            }
+        )
+        return data
+
+    def perform_request(self, validated_request_data):
+        if bk_resource_settings.ACCESS_TOKEN_API_URL:
+            return super().perform_request(validated_request_data)
+        return {}
 
 
 class BkApiResource(APIResource, abc.ABC):
@@ -74,7 +126,10 @@ class BkApiResource(APIResource, abc.ABC):
         # 后台程序或非request请求直接返回
         if params.pop("_is_backend", False) or is_backend():
             params.pop("_request", None)
+            # 平台鉴权
             params = self.add_platform_auth_params(params, force_platform_auth=True)
+            # 补充认证信息
+            params = self.add_app_access_token(params)
             return params
 
         # 前端应用, _request，用于并发请求的场景
@@ -94,6 +149,24 @@ class BkApiResource(APIResource, abc.ABC):
 
         # 平台鉴权兼容
         params = self.add_platform_auth_params(params)
+
+        # 参数不足时需要补充认证信息
+        params = self.add_app_access_token(params)
+
+        return params
+
+    def add_app_access_token(self, params: dict) -> dict:
+        """
+        补充应用AccessToken
+        """
+
+        if all(
+            [
+                "access_token" not in params,
+                *[cookie_param not in params for cookie_param in self.oath_cookies_params.keys()],
+            ]
+        ):
+            params["access_token"] = GetAppAccessToken()().get("access_token", None)
 
         return params
 

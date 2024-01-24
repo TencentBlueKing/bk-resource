@@ -50,6 +50,8 @@ class BkResourceSettings:
         REQUEST_BKAPI_COOKIE_FIELDS=["blueking_language", "django_language"],
         REQUEST_LANGUGAE_HEADER_KEY="blueking-language",
         RESOURCE_BULK_REQUEST_PROCESSES=None,
+        ACCESS_TOKEN_API_URL="",
+        ACCESS_TOKEN_TIMEOUT=60 * 60 * 6,
     )
 
     LAZY_IMPORT_SETTINGS = (
