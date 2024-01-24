@@ -78,7 +78,11 @@ class TestBkApiResource(TestCase):
                     "blueking-language": "zh-Hans",
                     "cookie": "username=admin",
                     "x-bkapi-authorization": (
-                        f'{{"bk_app_code": "{settings.APP_CODE}", "bk_app_secret": "{settings.SECRET_KEY}"}}'
+                        '{'
+                        f'"bk_app_code": "{settings.APP_CODE}", '
+                        f'"bk_app_secret": "{settings.SECRET_KEY}", '
+                        f'"access_token": null'
+                        '}'
                     ),
                 }
             },
