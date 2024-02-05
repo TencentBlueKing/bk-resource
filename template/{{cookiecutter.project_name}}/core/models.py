@@ -168,7 +168,7 @@ class SoftDeleteModelManager(OperateRecordModelManager):
 
     def get_queryset(self):
         """获取queryset"""
-        return SoftDeleteQuerySet(self.model, using=self._db)
+        return SoftDeleteQuerySet(self.model, using=self._db).filter(is_deleted=False)
 
 
 class SoftDeleteModel(OperateRecordModel):
