@@ -1,7 +1,7 @@
 ![logo.png](assests/logo.png)
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/TencentBlueKing/bk-resource/blob/main/LICENSE.txt)
-[![Release Version](https://img.shields.io/badge/release-0.4.8-brightgreen.svg)](https://github.com/TencentBlueKing/bk-resource/releases)
+[![Release Version](https://img.shields.io/badge/release-0.4.9-brightgreen.svg)](https://github.com/TencentBlueKing/bk-resource/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/TencentBlueKing/bk-resource/pulls)
 [![codecov](https://codecov.io/gh/TencentBlueKing/bk-resource/branch/main/graph/badge.svg)](https://codecov.io/gh/TencentBlueKing/bk-resource)
 [![Unittest Py3](https://github.com/TencentBlueKing/bk-resource/actions/workflows/unittest.yml/badge.svg)](https://github.com/TencentBlueKing/bk-resource/actions/workflows/unittest.yml)
@@ -27,16 +27,19 @@
 ### Installation
 
 1. 安装`cruft`
+
 ```bash
 $ pip install cruft
 ```
 
 2. 通过`cruft`脚本架生成项目
+
 ```bash
 $ cruft create https://github.com/TencentBlueKing/bk-resource.git --checkout main --directory template
 ```
 
 3. 添加远程仓库地址并完成推送
+
 ```bash
 cd {{ project_id }}
 git init
@@ -47,15 +50,19 @@ git push -u origin master
 ```
 
 ### 模板生命周期管理
+
 检查或更新模板前需确保本地代码已提交到 GIT 仓库
+
 1. 检查模板是否更新
+
 ```bash
-$ cruft check
+$ cruft check --checkout main
 ```
 
 2. 合并模板到本地项目
+
 ```bash
-$ cruft update
+$ cruft update --checkout main
 ```
 
 ### Usage
