@@ -16,7 +16,10 @@ We undertake not to change the open source license (MIT license) applicable
 to the current version of the project delivered to anyone in the future.
 """
 
-from setuptools import setup
+from setuptools import setup, find_packages
+
+with open("readme.md") as f:
+    readme = f.read()
 
 setup(
     name="bk_resource",
@@ -25,14 +28,9 @@ setup(
     url="https://bk.tencent.com",
     author_email="blueking@tencent.com",
     description="Bk Resource",
-    packages=[
-        "bk_resource",
-        "bk_resource.conf",
-        "bk_resource.contrib",
-        "bk_resource.management",
-        "bk_resource.management.commands",
-        "bk_resource.utils",
-    ],
+    long_description=readme,
+    long_description_content_type="text/markdown",
+    packages=find_packages(include=["bk_resource"]),
     install_requires=[
         "blueapps>=4.10.0,<5",
         "django>=3.2.18",
