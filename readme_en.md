@@ -24,16 +24,19 @@
 ### Installation
 
 1. Install `cruft`
+
 ```bash
 $ pip install cruft
 ```
 
 2. Generate project using `cruft`
+
 ```bash
 $ cruft create https://github.com/TencentBlueKing/bk-resource.git --checkout main --directory template
 ```
 
 3. Add a remote repository and push
+
 ```bash
 cd {{ project_id }}
 git init
@@ -44,15 +47,19 @@ git push -u origin master
 ```
 
 ### Template Lifecycle Management
+
 Make sure the local code has been committed before checking or updating the template,
+
 1. Check update of the template
+
 ```bash
-$ cruft check
+$ cruft check --checkout main
 ```
 
 2. Merge the template into the local project
+
 ```bash
-$ cruft update
+$ cruft update  --checkout main
 ```
 
 ### Usage
