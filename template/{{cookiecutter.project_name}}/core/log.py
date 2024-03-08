@@ -27,15 +27,14 @@ class JSONLogFormatter(json_log_formatter.JSONFormatter):
         extra["bk_run_mode"] = settings.RUN_MODE
         extra["message"] = message
         extra["name"] = record.name
-        extra["level"] = record.levelname
-        extra["func"] = record.funcName
-        extra["path"] = record.pathname
+        extra["levelname"] = record.levelname
+        extra["funcName"] = record.funcName
+        extra["pathname"] = record.pathname
         extra["lineno"] = record.lineno
         extra["process"] = record.process
         extra["thread"] = record.thread
-        if "time" not in extra:
-            extra["time"] = datetime.datetime.now().strftime(api_settings.DATETIME_FORMAT)
-
+        if "asctime" not in extra:
+            extra["asctime"] = datetime.datetime.now().strftime(api_settings.DATETIME_FORMAT)
         if record.exc_info:
             extra["exc_info"] = self.formatException(record.exc_info)
 
