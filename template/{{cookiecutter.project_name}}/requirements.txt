@@ -22,6 +22,7 @@ djangorestframework==3.12.4
 drf-yasg==1.20.0
 drf_spectacular==0.12.0
 django-environ==0.10.0
+mysqlclient==2.1.1
 
 # staticfiles
 whitenoise==5.2.0
