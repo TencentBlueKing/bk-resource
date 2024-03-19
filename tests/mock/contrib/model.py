@@ -27,6 +27,7 @@ DEFAULT_OBJ = {"pk": 1}
 class QuerySet:
     count = 0
     items = [DEFAULT_OBJ]
+    _prefetch_related_lookups = ()
 
     def get(self, *args, **kwargs):
         return DEFAULT_OBJ
