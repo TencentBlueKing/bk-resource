@@ -6,7 +6,6 @@ import os
 
 import json_log_formatter
 from django.conf import settings
-from rest_framework.settings import api_settings
 
 
 class JSONLogFormatter(json_log_formatter.JSONFormatter):
@@ -26,7 +25,7 @@ class JSONLogFormatter(json_log_formatter.JSONFormatter):
         extra["bk_app_module"] = os.getenv("BKPAAS_APP_MODULE_NAME", "default")
         extra["bk_run_mode"] = settings.RUN_MODE
         extra["message"] = message
-        extra["name"] = record.name
+        extra["logger"] = record.name
         extra["levelname"] = record.levelname
         extra["funcName"] = record.funcName
         extra["pathname"] = record.pathname
@@ -34,7 +33,7 @@ class JSONLogFormatter(json_log_formatter.JSONFormatter):
         extra["process"] = record.process
         extra["thread"] = record.thread
         if "asctime" not in extra:
-            extra["asctime"] = datetime.datetime.now().strftime(api_settings.DATETIME_FORMAT)
+            extra["asctime"] = datetime.datetime.now().strftime(settings.LOG_TIME_FORMAT)
         if record.exc_info:
             extra["exc_info"] = self.formatException(record.exc_info)
 

@@ -47,6 +47,7 @@ CELERYD_CONCURRENCY = os.getenv("BK_CELERYD_CONCURRENCY", 2)  # noqa
 CELERY_IMPORTS = ()
 
 # load logging settings
+LOG_TIME_FORMAT = "%Y-%m-%d %H:%M:%S,%f"
 LOGGING = get_logging_config_dict(locals())
 LOGGING["formatters"]["verbose"] = {"()": "core.log.JSONLogFormatter"}
 LOGGING["loggers"]["bk_resource"] = LOGGING["loggers"]["app"]
