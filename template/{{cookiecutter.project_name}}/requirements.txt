@@ -10,7 +10,7 @@ bk_resource==0.4.10
 blueapps>=4.10.0,<5
 
 # web server
-gunicorn==19.6.0
+gunicorn==21.2.0
 
 # django
 django>=3,<4
