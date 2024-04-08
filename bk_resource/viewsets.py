@@ -51,7 +51,7 @@ class ResourceRoute(object):
         decorators=None,
     ):
         """
-        :param method: 请求方法，目前仅支持GET和POST
+        :param method: 请求方法，目前支持GET, POST, PUT, DELETE
         :param resource_class: 所用到的Resource类
         :param endpoint: 端点名称，不提供则为list或create
         :param pk_field: 主键名称，如果不为空，则该视图为 detail route
