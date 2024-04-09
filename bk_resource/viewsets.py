@@ -51,7 +51,7 @@ class ResourceRoute(object):
         decorators=None,
     ):
         """
-        :param method: 请求方法，目前仅支持GET和POST
+        :param method: 请求方法，目前支持GET, POST, PUT, PATCH, DELETE
         :param resource_class: 所用到的Resource类
         :param endpoint: 端点名称，不提供则为list或create
         :param pk_field: 主键名称，如果不为空，则该视图为 detail route
@@ -59,8 +59,6 @@ class ResourceRoute(object):
         :param content_encoding: 返回数据内容编码类型
         :params decorators: 给view_func添加的装饰器列表
         """
-        # if method.upper() not in ["GET", "POST"]:
-        #     raise ValueError(_("method参数错误，目前仅支持GET或POST方法"))
 
         self.method = method.upper()
 

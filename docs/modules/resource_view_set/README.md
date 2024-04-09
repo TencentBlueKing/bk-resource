@@ -30,7 +30,7 @@ class UserInfoViewSet(ResourceViewSet):
 
 目前，ResourceRoute支持以下属性配置：
 
-- `method`: 请求方法，目前仅支持GET和POST
+- `method`: 请求方法，目前支持GET, POST, PUT, PATCH, DELETE
 - `resource_class`: 需要调用的Resource类
 - `endpoint`: 定义追加的url后缀，如在`TestViewSet`中定义了一个`endpoint`为`my_endpoint`的`ResourceRoute`，则访问链接为`.../test/my_endpoint/`
   ，若不定义`endpoint`，则为`.../test/`
