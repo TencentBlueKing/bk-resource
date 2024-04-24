@@ -161,6 +161,7 @@ if IS_USE_CELERY:
         "django_celery_results",
     )
     CELERY_ENABLE_UTC = True
+    CELERY_TIMEZONE = TIME_ZONE
     CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 # remove disabled apps
