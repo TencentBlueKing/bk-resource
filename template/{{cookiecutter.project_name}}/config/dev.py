@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from blueapps.conf.log import get_logging_config_dict
 from blueapps.conf.validators import EnvValidator
 
 from config import RUN_VER
@@ -22,6 +23,9 @@ STATIC_URL = "/static/"
 
 # APP静态资源目录url
 REMOTE_STATIC_URL = "%sremote/" % STATIC_URL
+
+# 日志格式
+LOGGING["formatters"]["verbose"] = get_logging_config_dict(locals())["formatters"]["verbose"]
 
 # Celery 消息队列设置 RabbitMQ
 # BROKER_URL = 'amqp://guest:guest@localhost:5672//'

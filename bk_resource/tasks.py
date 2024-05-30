@@ -18,8 +18,8 @@ to the current version of the project delivered to anyone in the future.
 
 from functools import wraps
 
+from blueapps.core.celery import celery_app
 from celery.result import AsyncResult
-from celery.task import task
 from django.utils.module_loading import import_string
 
 from bk_resource.exceptions import CustomError
@@ -27,7 +27,7 @@ from bk_resource.utils.logger import logger
 from bk_resource.utils.request import set_local_username
 
 
-@task(bind=True)
+@celery_app.task(bind=True)
 def run_perform_request(self, resource_obj, username, request_data):
     """
     将resource作为异步任务执行
