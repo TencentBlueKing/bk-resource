@@ -47,7 +47,7 @@ class AnotherPermissionResource(Resource):
 
 ### 多条数据
 
-返回多条数据时，需要在 Resource 类中声明 `many_response = True`
+返回多条数据时，需要在 Resource 类中声明 `many_response_data = True`
 
 1. 一个列表，列表中的每一个元素是符合 ResponseSerializer 格式的 dict 对象
 2. ORM Model QuerySet（必须提供 ResponseSerializer 且 ResponseSerializer 继承自 ModelSerializer）
