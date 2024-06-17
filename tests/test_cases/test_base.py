@@ -25,7 +25,7 @@ from tests.mock import base
 from tests.mock.base import (
     DirectResource,
     ErrorResource,
-    NonCollectoResource,
+    NonCollectorResource,
     RequestResource,
     UserResource,
 )
@@ -38,7 +38,7 @@ class ResourceTest(TestCase):
         self.assertEqual(result, None)
 
     def test_none_support_data_collect(self):
-        result = NonCollectoResource()()
+        result = NonCollectorResource()()
         self.assertEqual(result, None)
 
     def test_request_exception(self):

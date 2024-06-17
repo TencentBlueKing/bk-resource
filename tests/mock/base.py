@@ -27,7 +27,7 @@ class DirectResource(Resource):
         return None
 
 
-class NonCollectoResource(Resource):
+class NonCollectorResource(Resource):
     support_data_collect = False
 
     def perform_request(self, validated_request_data):

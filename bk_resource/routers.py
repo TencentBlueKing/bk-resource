@@ -48,8 +48,10 @@ class ResourceRouter(DefaultRouter):
             # 全小写的属性不是类，忽略
             if attr.startswith("_") or attr[0].islower():
                 continue
-
-            if isinstance(viewset, type) and issubclass(viewset, GenericViewSet):
+            # viewset is not ResourceViewSet：
+            # 1. 在 DRF >= 3.15.0 版本，重复注册会抛出 ImproperlyConfigured 异常
+            # 2. 对于用户导入的 ResourceViewSet 类不需要注册
+            if isinstance(viewset, type) and issubclass(viewset, GenericViewSet) and viewset is not ResourceViewSet:
                 module_prefix = self.get_default_basename(viewset)
                 if prefix:
                     module_prefix = f"{prefix}/{module_prefix}" if module_prefix else prefix

@@ -33,6 +33,6 @@ jobs:
           export BK_APP_CONFIG_PATH=tests.config
           pytest -vs tests --disable-warnings --cov=.
       - name: Upload coverage to Codecov
-        env:
-          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
