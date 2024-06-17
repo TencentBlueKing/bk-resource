@@ -24,7 +24,7 @@ from django.test import TestCase
 
 from bk_resource.utils.local import local
 from bk_resource.utils.request import (
-    get_moke_request,
+    get_mock_request,
     get_request_username,
     set_local_username,
 )
@@ -55,4 +55,4 @@ class TestSetLocalUsername(TestCase):
 
 class TestMockRequest(TestCase):
     def test(self):
-        self.assertIsInstance(get_moke_request(), WSGIRequest)
+        self.assertIsInstance(get_mock_request(), WSGIRequest)

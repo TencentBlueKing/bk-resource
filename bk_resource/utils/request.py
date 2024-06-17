@@ -42,5 +42,5 @@ def set_local_username(username):
     local.username = username
 
 
-def get_moke_request(**kwargs):
+def get_mock_request(**kwargs):
     return RequestFactory().request(**kwargs)

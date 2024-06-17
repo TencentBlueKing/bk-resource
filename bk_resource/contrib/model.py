@@ -26,7 +26,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from bk_resource import Resource
-from bk_resource.utils.request import get_moke_request
+from bk_resource.utils.request import get_mock_request
 
 
 class Empty:
@@ -63,7 +63,7 @@ class ViewMixin(GenericAPIView):
 
     def build_request(self, *, method: str, params: dict) -> WSGIRequest:
         # 构造虚拟请求对象
-        request = get_moke_request(REQUEST_METHOD=method)
+        request = get_mock_request(REQUEST_METHOD=method)
         # 为对应的方法添加请求体
         if request.method.lower() in ["get"]:
             setattr(request, "query_params", params)
