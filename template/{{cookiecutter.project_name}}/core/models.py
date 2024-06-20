@@ -85,7 +85,7 @@ class OperateRecordModel(models.Model):
     objects = OperateRecordModelManager()
     origin_objects = models.Manager()
 
-    created_at = models.DateTimeField(gettext_lazy("创建时间"), default=timezone.now, auto_now_add=True)
+    created_at = models.DateTimeField(gettext_lazy("创建时间"), auto_now_add=True)
     created_by = models.CharField(gettext_lazy("创建者"), max_length=32, default="", null=True, blank=True)
     updated_at = models.DateTimeField(gettext_lazy("更新时间"), blank=True, null=True, auto_now=True)
     updated_by = models.CharField(gettext_lazy("修改者"), max_length=32, default="", blank=True, null=True)
