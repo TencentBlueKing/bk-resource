@@ -23,7 +23,7 @@ with open("readme.md") as f:
 
 setup(
     name="bk_resource",
-    version="0.4.12b0",
+    version="0.4.12",
     author="blueking",
     url="https://bk.tencent.com",
     author_email="blueking@tencent.com",
@@ -46,7 +46,7 @@ setup(
         "pyinstrument>=3.4.2",
         "arrow>=1.2.0",
         "django-rest-framework-condition>=0.1.1",
-        "celery>=5",
+        "celery>=4.4.0",
     ],
     include_package_data=True,
 )

@@ -25,7 +25,7 @@ from django.core.cache import cache, caches
 from django.utils.encoding import force_bytes
 from django.utils.translation import gettext
 
-from bk_resource.contrib.model import Empty
+from bk_resource.base import Empty
 from bk_resource.settings import bk_resource_settings
 from bk_resource.utils.common_utils import count_md5
 from bk_resource.utils.local import local
