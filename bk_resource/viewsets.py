@@ -127,7 +127,6 @@ class ResourceViewSet(viewsets.GenericViewSet):
 
     @classmethod
     def generate_endpoint(cls):
-        view_set_path = f"{cls.__module__}.{cls.__name__}"
 
         for resource_route in cls.resource_routes:
             # 生成方法模版
@@ -208,9 +207,8 @@ class ResourceViewSet(viewsets.GenericViewSet):
                 else:
                     raise AssertionError(gettext("不支持的请求方法: %s，请确认resource_routes配置是否正确!") % resource_route.method)
 
-                RESOURCE_MAPPING[
-                    (resource_route.method, f"{view_set_path}.{cls.EMPTY_ENDPOINT_METHODS[resource_route.method]}")
-                ] = resource_route.resource_class
+                resource_action = cls.EMPTY_ENDPOINT_METHODS[resource_route.method]
+
             else:
                 function = method_decorator(cache_control(max_age=0, private=True))(function)
                 function.__name__ = resource_route.endpoint
@@ -225,9 +223,12 @@ class ResourceViewSet(viewsets.GenericViewSet):
 
                 function = decorator_function(function)
                 setattr(cls, resource_route.endpoint, function)
-                RESOURCE_MAPPING[
-                    (resource_route.method, f"{view_set_path}.{resource_route.endpoint}")
-                ] = resource_route.resource_class
+
+                resource_action = resource_route.endpoint
+
+            RESOURCE_MAPPING[
+                (resource_route.method, f"{cls.__module__}.{cls.__name__}.{resource_action}")
+            ] = resource_route.resource_class
 
     @classmethod
     def _generate_function_template(cls, resource_route: ResourceRoute):
