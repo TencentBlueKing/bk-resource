@@ -59,3 +59,7 @@ class ResourceRouter(DefaultRouter):
 
     def get_default_basename(self, viewset):
         return get_underscore_viewset_name(viewset)
+
+    def is_already_registered(self, new_basename):
+        """DRF 3.15.0 开始自动检测重复basename注册，和resource注册机制冲突，因此屏蔽该机制"""
+        return False
