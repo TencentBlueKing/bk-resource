@@ -2,28 +2,71 @@ name: Upload Python Package
 
 on:
   release:
-    types: [published]
+    types: [ published ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to validate (e.g. v0.4.13)'
+        required: false
+        type: string
 
 permissions:
   contents: read
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.10.5'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build
-    - name: Build package
-      run: python -m build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Read version from setup.py
+        id: ver
+        run: |
+          python - <<'PY'
+          import os, re, sys
+          s = open('setup.py', 'r', encoding='utf-8').read()
+          m = re.search(r"version\s*=\s*['\"]([^'\"]+)['\"]", s)
+          if not m:
+              print("::error::Cannot find version in setup.py")
+              sys.exit(1)
+          ver = m.group(1)
+          print(f"version={ver}")
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+              fh.write(f"version={ver}\n")
+          PY
+      - name: Determine tag
+        id: tg
+        run: |
+          TAG=""
+          if [ "${{ github.event_name }}" = "release" ]; then TAG="${{ github.event.release.tag_name }}"; fi
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.tag }}" ]; then TAG="${{ inputs.tag }}"; fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+      - name: Validate tag matches setup.py version
+        if: steps.tg.outputs.tag != ''
+        run: |
+          TAG='${{ steps.tg.outputs.tag }}'
+          VER='${{ steps.ver.outputs.version }}'
+          TAG_STRIPPED="${TAG#v}"
+          TAG_STRIPPED="${TAG_STRIPPED#V}"
+          if [ "$TAG_STRIPPED" != "$VER" ]; then
+            echo "::error::Tag ($TAG) does not match setup.py version ($VER)";
+            exit 1;
+          fi
+          echo "Tag ($TAG) matches setup.py version ($VER)"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: python -m build
+      - name: Publish package
+        if: ${{ !env.ACT }}
+        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
