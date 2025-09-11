@@ -42,9 +42,17 @@ class ResourceFinder(BaseFinder):
             app_names = set(app_names)
             app_configs = [ac for ac in app_configs if ac.name in app_names]
 
+        # 获取需要排除的应用列表
+        exclude_apps_env = bk_resource_settings.RESOURCE_EXCLUDE_APPS
+        exclude_apps = set()
+        if exclude_apps_env:
+            exclude_apps = set(app.strip() for app in exclude_apps_env.split(',') if app.strip())
+
         for app_config in app_configs:
-            self.resource_path += self.find(app_config.path, root_path=os.path.dirname(app_config.path))
-            app_path_directories.append(app_config.path)
+            # 检查当前应用是否在排除列表中
+            if app_config.name not in exclude_apps:
+                self.resource_path += self.find(app_config.path, root_path=os.path.dirname(app_config.path))
+                app_path_directories.append(app_config.path)
 
         for path in RESOURCE_DIRS:
             search_path = os.path.join(settings.BASE_DIR, path)
