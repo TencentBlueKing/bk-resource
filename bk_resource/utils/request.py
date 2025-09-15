@@ -16,14 +16,14 @@ We undertake not to change the open source license (MIT license) applicable
 to the current version of the project delivered to anyone in the future.
 """
 
-from django.test import RequestFactory
-
-from bk_resource.utils.local import local
 from typing import Optional, Type
 
 from django.http import HttpRequest
-
+from django.test import RequestFactory
 from django.urls import Resolver404, resolve
+
+from bk_resource.utils.local import local
+
 
 def get_request_username(default=""):
     try:
@@ -48,6 +48,7 @@ def set_local_username(username):
 
 def get_mock_request(**kwargs):
     return RequestFactory().request(**kwargs)
+
 
 def get_resource_by_request(request: HttpRequest = None) -> Optional[Type["bk_resource.Resource"]]:
     """根据 request 对象获取具体的 Resource 类"""

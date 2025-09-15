@@ -35,6 +35,8 @@ from bk_resource.base import Resource
 from bk_resource.settings import bk_resource_settings
 
 RESOURCE_MAPPING = {}
+
+
 class ResourceRoute(object):
     """
     Resource的视图配置，应用于viewsets
