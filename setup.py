@@ -23,7 +23,7 @@ with open("readme.md") as f:
 
 setup(
     name="bk_resource",
-    version="0.4.13",
+    version="0.4.14",
     author="blueking",
     url="https://bk.tencent.com",
     author_email="blueking@tencent.com",
