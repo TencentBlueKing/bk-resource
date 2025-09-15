@@ -35,6 +35,9 @@ from bk_resource.base import Resource
 from bk_resource.settings import bk_resource_settings
 
 
+RESOURCE_MAPPING = {}
+
+
 class ResourceRoute(object):
     """
     Resource的视图配置，应用于viewsets
@@ -124,6 +127,7 @@ class ResourceViewSet(viewsets.GenericViewSet):
 
     @classmethod
     def generate_endpoint(cls):
+
         for resource_route in cls.resource_routes:
             # 生成方法模版
             function = cls._generate_function_template(resource_route)
@@ -202,6 +206,9 @@ class ResourceViewSet(viewsets.GenericViewSet):
                     setattr(cls, cls.EMPTY_ENDPOINT_METHODS[resource_route.method], function)
                 else:
                     raise AssertionError(gettext("不支持的请求方法: %s，请确认resource_routes配置是否正确!") % resource_route.method)
+
+                resource_action = cls.EMPTY_ENDPOINT_METHODS[resource_route.method]
+
             else:
                 function = method_decorator(cache_control(max_age=0, private=True))(function)
                 function.__name__ = resource_route.endpoint
@@ -216,6 +223,12 @@ class ResourceViewSet(viewsets.GenericViewSet):
 
                 function = decorator_function(function)
                 setattr(cls, resource_route.endpoint, function)
+
+                resource_action = resource_route.endpoint
+
+            RESOURCE_MAPPING[
+                (resource_route.method, f"{cls.__module__}.{cls.__name__}.{resource_action}")
+            ] = resource_route.resource_class
 
     @classmethod
     def _generate_function_template(cls, resource_route: ResourceRoute):
