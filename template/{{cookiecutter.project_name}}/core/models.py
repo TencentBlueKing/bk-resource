@@ -30,7 +30,7 @@ class OperateRecordQuerySet(models.query.QuerySet):
             if "updated_by" not in kwargs:
                 kwargs["updated_by"] = get_request_username()
 
-        super().update(**kwargs)
+        return super().update(**kwargs)
 
 
 class OperateRecordModelManager(models.Manager):
