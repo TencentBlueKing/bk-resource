@@ -113,7 +113,7 @@ DEFAULT_SCHEMA_RESULT = [
         "description": "Int field",
     },
     {
-        "type": "String",
+        "type": "Json",
         "required": True,
         "name": "json_field",
         "source_name": "json_field",
@@ -130,5 +130,5 @@ DEFAULT_RENDER_LIST = [
     "{Boolean} bool_field Bool field",
     "{Number} float_field Float field",
     "{Integer} int_field Int field",
-    "{String} json_field Json field",
+    "{Json} json_field Json field",
 ]

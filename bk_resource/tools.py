@@ -40,6 +40,7 @@ class FieldType(object):
     OBJECT = "Object"
     ARRAY = "Array"
     ENUM = "Enum"
+    JSON = "Json"
 
 
 def get_serializer_fields(serializer_class):
@@ -85,6 +86,11 @@ def field_to_schema(field):
         type_params = {
             "type": FieldType.OBJECT,
             "properties": OrderedDict([(key, field_to_schema(value)) for key, value in list(field.fields.items())]),
+        }
+    elif isinstance(field, serializers.JSONField):
+        # Represent DRF JSONField as Json type in schema
+        type_params = {
+            "type": FieldType.JSON,
         }
     # elif isinstance(field, serializers.ManyRelatedField):
     #     type_params = {
